@@ -32,6 +32,9 @@ class Preprocessor:
 
         cleanr = re.compile(r'[a-zA-Z<>0-9&;:=?"()\'/]+')
         corpus = re.sub(cleanr, '', corpus)
+
+        clean_flags = re.compile(u'([\U0001F1E6-\U0001F1FF]{2})')
+        corpus = re.sub(clean_flags, '', corpus)
         
         return corpus
 
