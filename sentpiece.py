@@ -1,4 +1,4 @@
-from os import read
+from os import WIFSTOPPED, write
 import sentencepiece as spm
 
 
@@ -21,3 +21,17 @@ def segmentation(data_path, model_prefix, out_file):
     with open(f"data/segmented/{out_file}", 'w') as writer:
         writer.write(" ".join(segmented))
 
+
+def desegmentation(data_path, model_prefix):
+    sp = spm.SentencePieceProcessor(model_file=f"spm_models/{model_prefix}.model")
+
+    with open(data_path, 'r') as reader:
+        corpus = reader.read()
+
+    desegmented = sp.decode(corpus.split(' '))
+
+    data_path = data_path.split(".")
+    data_path = "".join([data_path[0], "_desegmented.", data_path[1]])
+    
+    with open(data_path, 'w') as writer:
+        writer.write(desegmented)
