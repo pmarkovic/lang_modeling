@@ -42,8 +42,8 @@ class Preprocessor:
         split_point = int(len(corpus)*0.8)
         train, test = corpus[:split_point], corpus[split_point:]
 
-        with open(f"data/{self._lang}_train.txt", 'w') as writer:
+        with open(f"data/processed/{self._lang}_train.txt", 'w') as writer:
             writer.write(train)
 
-        with open(f"data/{self._lang}_test.txt", 'w') as writer:
+        with open(f"data/processed/{self._lang}_test.txt", 'w') as writer:
             writer.write(test)

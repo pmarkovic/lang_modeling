@@ -11,13 +11,13 @@ def train_model(data_path, model_prefix, voc_size):
 
 
 def segmentation(data_path, model_prefix, out_file):
-    sp = spm.SentencePieceProcessor(model_file=f"models/{model_prefix}.model")
+    sp = spm.SentencePieceProcessor(model_file=f"spm_models/{model_prefix}.model")
 
     with open(data_path, 'r') as reader:
         corpus = reader.read()
 
     segmented = sp.encode(corpus, out_type=str)
 
-    with open(f"segmented_corpora/{out_file}", 'w') as writer:
+    with open(f"data/segmented/{out_file}", 'w') as writer:
         writer.write(" ".join(segmented))
 

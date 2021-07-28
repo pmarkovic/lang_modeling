@@ -1,0 +1,12 @@
+
+iter: 0
+valid log probability: -3527.304424
+PPL net: 6205.838306
+
+iter: 1
+valid log probability: -3832.225446
+PPL net: 13202.996934
+
+iter: 2
+valid log probability: -3827.196456
+PPL net: 13039.622150
