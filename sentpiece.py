@@ -2,12 +2,19 @@ from os import WIFSTOPPED, write
 import sentencepiece as spm
 
 
-def train_model(data_path, model_prefix, voc_size):
-    spm.SentencePieceTrainer.train(input=data_path, 
-                                   model_prefix=model_prefix,   
-                                   vocab_size=voc_size, 
-                                   character_coverage=1.0, 
-                                   model_type="bpe")
+def train_model(data_path, model_prefix, voc_size, lang="eng"):
+    if lang == "eng":
+        spm.SentencePieceTrainer.train(input=data_path,
+                                       model_prefix=model_prefix,
+                                       vocab_size=voc_size,
+                                       character_coverage=1.0,
+                                       model_type="bpe")
+    else:
+        spm.SentencePieceTrainer.train(input=data_path,
+                                       model_prefix=model_prefix,
+                                       vocab_size=voc_size,
+                                       character_coverage=0.995,
+                                       model_type="bpe")
 
 
 def segmentation(data_path, model_prefix, out_file):
