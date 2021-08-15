@@ -1,0 +1,18 @@
+Character-level model
+
+Small model
+Baseline
+Voc size: 100; PP: 14.253632
+Voc size: 800; PP: 100.677282 
+Voc size: 400; PP: 64.884178
+Voc size: 200; PP: 32.631905
+Voc size: 150; PP: 25.436121
+
+Large model
+Baseline
+Voc size: 1500; PP: 87.168918
+Voc size: 2000; PP: 81.923692
+Voc size: 2500; PP: 63.051203
+Voc size: 3000; PP: 69.392821
+Voc size: 2700; PP: 64.624089
+

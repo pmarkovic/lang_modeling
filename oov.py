@@ -1,6 +1,5 @@
+from copy import deepcopy
 from collections import Counter
-
-from nltk.util import pr
 
 
 class OOV:
@@ -51,3 +50,6 @@ class OOV:
         print(f"Total number of test words: {total_test_words}")
         print(f"OOV rate: {unseen_words_count / total_test_words}")
         print("=" * 30)
+
+    def check_oov(self, data_path):
+        pass
