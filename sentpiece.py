@@ -1,4 +1,3 @@
-from os import WIFSTOPPED, write
 import sentencepiece as spm
 
 
@@ -28,7 +27,7 @@ def desegmentation(data_path, model_prefix):
     with open(data_path, 'r') as reader:
         corpus = reader.read()
 
-    desegmented = sp.decode(corpus.split(' '))
+    desegmented = sp.decode(corpus)
 
     data_path = data_path.split(".")
     data_path = "".join([data_path[0], "_desegmented.", data_path[1]])
