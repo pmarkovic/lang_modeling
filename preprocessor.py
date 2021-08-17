@@ -38,7 +38,7 @@ class Preprocessor:
             corpus = reader.read()
 
         bn_corp = []
-        corpus = corpus.replace("<br />", "\n").replace("।", "\n").replace("!", "\n").replace("?", "\n")
+        corpus = corpus.replace("।", "\n").replace("!", "\n").replace("?", "\n").replace("<br />", "\n")
         for i, line in enumerate(corpus.split(sep="\n")):
            bn_corp.append(_pp_bn_sent(line))
         
