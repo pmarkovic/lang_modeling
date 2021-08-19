@@ -42,3 +42,8 @@ def desegmentation(data_path, model_prefix):
     
     with open(data_path, 'w') as writer:
         writer.write(desegmented)
+
+def show_desegmented_file(file_path):
+    print(file_path[file_path.find("data/generated/")+len("data/generated/"):file_path.rfind("/")])
+    with open(file_path) as f:
+        print(f.read())
