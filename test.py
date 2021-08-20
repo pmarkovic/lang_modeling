@@ -1,4 +1,5 @@
 import argparse
+import json
 
 from oov import OOV
 
@@ -14,5 +15,10 @@ if __name__ == "__main__":
 
     comparer = OOV()
 
-    comparer.check_oov()
+    #oov_rates = comparer.check_oov()
+
+    with open("dump.json", 'r') as reader:
+        oov_rates = json.load(reader)
+
+    comparer.plot_oov_rates({value[0]: value[1] for value in oov_rates["eng_model_chr_ft"]})
 

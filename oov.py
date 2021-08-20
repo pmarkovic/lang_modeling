@@ -2,8 +2,7 @@ import os
 import json
 from copy import deepcopy
 from collections import Counter, defaultdict
-
-from nltk.util import pr
+import matplotlib.pyplot as plt
 
 
 class OOV:
@@ -79,10 +78,17 @@ class OOV:
                 unseen_words, total_words = self._calc_oov_rate(au_train_vocab)
                 oov_rates[dir].append((size, unseen_words / total_words))
 
-                        #self._print_oov_rate(f"{dir}_{size}", unseen_words, total_words)
-
-        #print(oov_rates)
         with open("dump.json", 'w') as json_writer:
             json.dump(oov_rates, json_writer, indent=4)
+
+        return oov_rates
+
+    def plot_oov_rates(self, oov_rates):
+        fig, ax = plt.subplots()
+        plt.loglog(list(oov_rates.keys()), list(oov_rates.values()))
+        ax.set_xlabel("vocab size")
+        ax.set_ylabel("OOV rate")
+        plt.legend()
+        plt.show()
 
                 
