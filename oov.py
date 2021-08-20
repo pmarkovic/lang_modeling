@@ -55,10 +55,16 @@ class OOV:
         print(f"{model} OOV rate")
         print(f"Number of unseen words: {unseen_words}")
         print(f"Total number of test words: {total_words}")
-        print(f"OOV rate: {unseen_words / total_words}")
+        print(f"OOV rate: {round(unseen_words / total_words * 100, 2)}%")
         print("=" * 30)
 
     def check_oov(self):
+        if os.path.isfile("oov_rates.json"):
+            with open("oov_rates.json", 'r') as reader:
+                oov_rates = json.load(reader)
+            
+            return oov_rates
+
         gen_dir_path = "./data/generated"
         oov_rates = defaultdict(list)
 
@@ -78,7 +84,7 @@ class OOV:
                 unseen_words, total_words = self._calc_oov_rate(au_train_vocab)
                 oov_rates[dir].append((size, unseen_words / total_words))
 
-        with open("dump.json", 'w') as json_writer:
+        with open("oov_rates.json", 'w') as json_writer:
             json.dump(oov_rates, json_writer, indent=4)
 
         return oov_rates
