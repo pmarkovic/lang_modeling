@@ -27,7 +27,7 @@ def desegmentation(data_path, model_prefix):
     with open(data_path, 'r') as reader:
         corpus = reader.read()
 
-    desegmented = sp.decode(corpus)
+    desegmented = sp.decode(corpus.split(' '))
 
     data_path = data_path.split(".")
     data_path = "".join([data_path[0], "_desegmented.", data_path[1]])

@@ -1,5 +1,9 @@
+import os
+import json
 from copy import deepcopy
-from collections import Counter
+from collections import Counter, defaultdict
+
+from nltk.util import pr
 
 
 class OOV:
@@ -10,7 +14,8 @@ class OOV:
         self._test_vocab = Counter()
 
         self._init_baseline()
-        self._baseline_rate()
+        unseen_words, total_words = self._calc_oov_rate(self._train_vocab)
+        self._print_oov_rate("Baseline", unseen_words, total_words)
 
     def _init_baseline(self):
         with open(self._train_path, 'r') as reader:
@@ -36,20 +41,48 @@ class OOV:
             return temp
         return word
 
-    def _baseline_rate(self):
+    def _calc_oov_rate(self, train_vocab):
         unseen_words_count = 0.0
         total_test_words = float(sum(self._test_vocab.values()))
 
         for word in self._test_vocab.keys():
-            if word not in self._train_vocab:
+            if word not in train_vocab:
                 unseen_words_count += 1.0
-        
+
+        return unseen_words_count, total_test_words
+
+    def _print_oov_rate(self, model, unseen_words, total_words):
         print("=" * 30)
-        print("Baseline OOV rate")
-        print(f"Number of unseen words: {unseen_words_count}")
-        print(f"Total number of test words: {total_test_words}")
-        print(f"OOV rate: {unseen_words_count / total_test_words}")
+        print(f"{model} OOV rate")
+        print(f"Number of unseen words: {unseen_words}")
+        print(f"Total number of test words: {total_words}")
+        print(f"OOV rate: {unseen_words / total_words}")
         print("=" * 30)
 
-    def check_oov(self, data_path):
-        pass
+    def check_oov(self):
+        gen_dir_path = "./data/generated"
+        oov_rates = defaultdict(list)
+
+        for dir in os.listdir(gen_dir_path):
+            for i in range(1, 8):
+                size = 10**i
+                file_path = os.path.join(gen_dir_path, dir, f"{size}_desegmented.txt")
+                au_train_vocab = deepcopy(self._train_vocab)
+
+                print(f"{dir}_{size}")
+
+                with open(file_path, 'r') as reader:
+                    for line in reader:
+                        words = [self._clean_word(word) for word in line.split()]
+                        au_train_vocab.update(words)
+
+                unseen_words, total_words = self._calc_oov_rate(au_train_vocab)
+                oov_rates[dir].append((size, unseen_words / total_words))
+
+                        #self._print_oov_rate(f"{dir}_{size}", unseen_words, total_words)
+
+        #print(oov_rates)
+        with open("dump.json", 'w') as json_writer:
+            json.dump(oov_rates, json_writer, indent=4)
+
+                
