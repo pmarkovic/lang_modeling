@@ -5,5 +5,5 @@ do
     len=$((10 ** $i))
     file_path="$1$len.txt"
     
-    ./rnnlm/rnnlm -rnnlm $2 -gen $len -debug 0 > $file_path
+    ../rnnlm-0.3e/rnnlm -rnnlm $2 -gen $len -debug 0 > $file_path
 done
