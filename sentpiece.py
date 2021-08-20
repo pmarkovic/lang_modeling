@@ -1,12 +1,19 @@
 import sentencepiece as spm
 
 
-def train_model(data_path, model_prefix, voc_size):
-    spm.SentencePieceTrainer.train(input=data_path, 
-                                   model_prefix=model_prefix,   
-                                   vocab_size=voc_size, 
-                                   character_coverage=1.0, 
-                                   model_type="bpe")
+def train_model(data_path, model_prefix, voc_size, lang="eng"):
+    if lang == "eng":
+        spm.SentencePieceTrainer.train(input=data_path,
+                                       model_prefix=model_prefix,
+                                       vocab_size=voc_size,
+                                       character_coverage=1.0,
+                                       model_type="bpe")
+    else:
+        spm.SentencePieceTrainer.train(input=data_path,
+                                       model_prefix=model_prefix,
+                                       vocab_size=voc_size,
+                                       character_coverage=0.995,
+                                       model_type="bpe")
 
 
 def segmentation(data_path, model_prefix, out_file):
@@ -34,3 +41,8 @@ def desegmentation(data_path, model_prefix):
     
     with open(data_path, 'w') as writer:
         writer.write(desegmented)
+
+def show_desegmented_file(file_path):
+    print(file_path[file_path.find("data/generated/")+len("data/generated/"):file_path.rfind("/")])
+    with open(file_path) as f:
+        print(f.read())
